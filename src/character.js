@@ -1,15 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import styled from 'styled-components'
 
-const Title = styled.h1`
-  font-size: 1.5em;
-  text-align: center;
-  color: red;
-`
+import AppBar from './AppBar'
 
 const App = () => {
-  return <Title>Character</Title>;
+  return <AppBar/>;
 }
 
 ReactDOM.render(<App />, document.querySelector("#root"))
