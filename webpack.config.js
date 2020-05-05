@@ -5,8 +5,8 @@ module.exports = {
     output: {
         path: path.join(__dirname, 'docs'),
         publicPath: '/',
-        filename: 'starter.js',
-        library: 'starter',
+        filename: 'character.js',
+        library: 'character',
         libraryTarget: 'var'
     },
     module: {

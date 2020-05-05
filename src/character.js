@@ -9,9 +9,7 @@ const Title = styled.h1`
 `
 
 const App = () => {
-  return <Title>Start your app in <a target="_blank" href="https://github.com/unsetbit/starter/blob/master/src/starter.js#L12">./src/starter.js</a></Title>;
+  return <Title>Character</Title>;
 }
 
 ReactDOM.render(<App />, document.querySelector("#root"))
-
-export const hello = 'world';

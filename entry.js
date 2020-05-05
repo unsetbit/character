@@ -1,1 +1,1 @@
-export * from './src/starter'
+export * from './src/character'
