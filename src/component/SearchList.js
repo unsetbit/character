@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
@@ -43,7 +43,6 @@ const CAPTURED_KEY_CODES = [
 ];
 
 function listItem(item, ref) {
-  console.log('ref', ref);
   return <ListItem
     button
     key={item.displayName}
@@ -63,8 +62,8 @@ export default function SearchList(props) {
 
   const { onQuery, items } = props
 
-  const ref = React.createRef()
-  const containerRef = React.createRef()
+  const ref = useRef(null)
+  const containerRef = useRef(null)
 
   const classes = useStyles()
 
@@ -113,55 +112,44 @@ export default function SearchList(props) {
       }
       // do something
     }
-    console.log(highlighted);
 
     // ---
     setTimeout(() => {
-      console.log('TIMEOUT!')
-      try {
-        console.log(ref)
-        if (!ref.current) return;
+      if (!ref.current) return;
 
-        const elementTop = ref.current.getBoundingClientRect().top;
-        const windowTop = window.scrollY;
-        const windowBottom = window.innerHeight + windowTop;
-        const containerTop = containerRef.current.offsetTop;
+      const elementTop = ref.current.getBoundingClientRect().top;
+      const windowTop = window.scrollY;
+      const windowBottom = window.innerHeight + windowTop;
+      const containerTop = containerRef.current.offsetTop;
 
-        const windowHasScrolled = window.scrollY > 10;
+      const windowHasScrolled = window.scrollY > 10;
 
-        const elementIsAboveContainerTop = elementTop < containerTop + 20;
-        const elementIsBelowContainerBottom = elementTop > window.innerHeight;
-        const elementIsOutsideOfContainer = elementIsAboveContainerTop || elementIsBelowContainerBottom;
+      const elementIsAboveContainerTop = elementTop < containerTop + 20;
+      const elementIsBelowContainerBottom = elementTop > window.innerHeight;
+      const elementIsOutsideOfContainer = elementIsAboveContainerTop || elementIsBelowContainerBottom;
 
-        if (elementIsOutsideOfContainer) {
-          let scrollDestination;
+      if (elementIsOutsideOfContainer) {
+        let scrollDestination;
 
-          if (elementIsAboveContainerTop) {
-            if (elementTop > -1 * (window.innerHeight / 2)) {
-              scrollDestination = window.scrollY - window.innerHeight / 2;
-            } else {
-              scrollDestination = elementTop;
-            }
+        if (elementIsAboveContainerTop) {
+          if (elementTop > -1 * (window.innerHeight / 2)) {
+            scrollDestination = window.scrollY - window.innerHeight / 2;
           } else {
-            if (elementTop < window.innerHeight * 1.5) {
-              scrollDestination = window.scrollY + window.innerHeight / 2;
-            } else {
-              scrollDestination = elementTop;
-            }
+            scrollDestination = elementTop;
           }
-
-          window.scrollTo(0, scrollDestination);
-          console.log('SCROLLED!')
+        } else {
+          if (elementTop < window.innerHeight * 1.5) {
+            scrollDestination = window.scrollY + window.innerHeight / 2;
+          } else {
+            scrollDestination = elementTop;
+          }
         }
-      } catch (e) {
-        console.error(e)
+
+        window.scrollTo(0, scrollDestination);
       }
     }, 100)
     // ---
-
   }
-
-  console.log(containerRef, ref)
 
   function isSelected(i) {
     return i === selectedItem
