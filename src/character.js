@@ -9,6 +9,7 @@ import Places from './Places'
 import Items from './Items'
 import Hazards from './Hazards'
 import Encounters from './Encounters'
+import Lists from './Lists'
 
 function getPage(title) {
   switch (title) {
@@ -24,6 +25,8 @@ function getPage(title) {
       return <Hazards/>
     case Encounters.Title:
       return <Encounters/>
+    case Lists.Title:
+      return <Lists/>
     default:
       return <Home/>
   }

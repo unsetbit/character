@@ -67,6 +67,12 @@ export default function Home() {
          </ListItemIcon>
          <ListItemText primary="Encounters" />
        </ListItem>
+       <ListItem button onClick={() => location.hash='/Lists'}>
+         <ListItemIcon className={classes.icon}>
+         { emoticon('🎲') }
+         </ListItemIcon>
+         <ListItemText primary="Lists" />
+       </ListItem>
      </List>
     </div>
   );
